@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import Error from './Error';
+import shortid from 'shortid';
 
-const Formulario = () => {
+const Formulario = ({ agregarNuevoGasto }) => {
     const [nombre, setNombre] = useState('');
     const [cantidad, setCantidad] = useState(0);
+    const [error, setError] = useState(false);
 
     const guardarNombre = e => {
         setNombre(e.target.value);
@@ -14,10 +17,25 @@ const Formulario = () => {
 
     const agregarGasto = e => {
         e.preventDefault();
+
+        if (cantidad <= 0 || isNaN(cantidad) || nombre.trim() === '') {
+            return setError(true);
+        }
+        setError(false);
+
+        const gasto = {
+            nombre,
+            cantidad,
+            id: shortid.generate()
+        };
+
+        agregarNuevoGasto(gasto);
     };
 
     return (
         <form onSubmit={agregarGasto}>
+            <h2>Agrega tus gastos aquí</h2>
+            {error ? <Error mensaje="Ambos campos son obligatorios o la cantidad del gasto es incorrecta" /> : null}
             <div className="campo">
                 <label>Nombre Gasto</label>
                 <input type="text" className="u-full-width" placeholder="Ej. Transporte" value={nombre} onChange={guardarNombre} />
