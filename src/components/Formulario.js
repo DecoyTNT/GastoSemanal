@@ -20,7 +20,7 @@ const Formulario = ({ setGasto, setCrearGasto, restante }) => {
         e.preventDefault();
         // console.log(restante);
         // console.log(cantidad > restante);
-        if (cantidad <= 0 || isNaN(cantidad) || nombre.trim() === '' || cantidad > restante) {
+        if (cantidad <= 0 || isNaN(cantidad) || nombre.trim() === '') {
             return setError(true);
         }
         setError(false);
@@ -49,7 +49,7 @@ const Formulario = ({ setGasto, setCrearGasto, restante }) => {
             </div>
             <div className="campo">
                 <label>Cantidad Gasto</label>
-                <input type="number" className="u-full-width" placeholder="Ej. 300" value={cantidad} onChange={guardarCantidad} />
+                <input type="number" className="u-full-width" placeholder="Ej. 300" max={restante} value={cantidad} onChange={guardarCantidad} />
             </div>
             <input type="submit" className="button-primary u-full-width" value="Agregar Gasto" />
         </form>
